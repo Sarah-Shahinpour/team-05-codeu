@@ -28,8 +28,7 @@ public class AboutMeServlet extends HttpServlet {
   * Responds with the "about me" section for a particular user.
   */
  @Override
- public void doGet(HttpServletRequest request, HttpServletResponse response)
-   throws IOException {
+ public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
   response.setContentType("text/html");
   
@@ -46,8 +45,7 @@ public class AboutMeServlet extends HttpServlet {
  }
  
  @Override
- public void doPost(HttpServletRequest request, HttpServletResponse response)
-   throws IOException {
+ public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
   UserService userService = UserServiceFactory.getUserService();  
   if (!userService.isUserLoggedIn()) {
