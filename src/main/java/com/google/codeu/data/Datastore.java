@@ -26,6 +26,7 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.*;
 
 /** Provides access to the data stored in Datastore. */
 public class Datastore {
@@ -79,6 +80,7 @@ public class Datastore {
 
     return messages;
   }
+  
    /** Stores the User in Datastore. */
   public void storeUser(User user) {
     Entity userEntity = new Entity("User", user.getEmail());
@@ -105,5 +107,14 @@ public class Datastore {
     User user = new User(email, aboutMe);
 
     return user;
+
+  public Set<String> getUsers(){
+    Set<String> users = new HashSet<>();
+    Query query = new Query("Message");
+    PreparedQuery results = datastore.prepare(query);
+    for(Entity entity : results.asIterable()) {
+      users.add((String) entity.getProperty("user"));
+    }
+    return users;
   }
 }
