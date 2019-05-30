@@ -109,6 +109,7 @@ public class Datastore {
     return user;
   }
 
+
   public Set<String> getUsers(){
     Set<String> users = new HashSet<>();
     Query query = new Query("Message");
