@@ -80,7 +80,7 @@ public class Datastore {
 
     return messages;
   }
-  
+
    /** Stores the User in Datastore. */
   public void storeUser(User user) {
     Entity userEntity = new Entity("User", user.getEmail());
@@ -88,7 +88,7 @@ public class Datastore {
     userEntity.setProperty("aboutMe", user.getAboutMe());
     datastore.put(userEntity);
   }
- 
+
    /**
    * Returns the User owned by the email address, or
    * null if no matching User was found.
@@ -107,6 +107,8 @@ public class Datastore {
     User user = new User(email, aboutMe);
 
     return user;
+  }
+
 
   public Set<String> getUsers(){
     Set<String> users = new HashSet<>();
