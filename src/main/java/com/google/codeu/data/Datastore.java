@@ -39,6 +39,8 @@ public class Datastore {
 
   /** Stores the Message in Datastore. */
   public void storeMessage(Message message) {
+	  System.out.println("Store Message\n\n\n");
+
     Entity messageEntity = new Entity("Message", message.getId().toString());
     messageEntity.setProperty("user", message.getUser());
     messageEntity.setProperty("text", message.getText());
@@ -53,9 +55,12 @@ public class Datastore {
    * @return a list of messages posted by the user, or empty list if user has never posted a
    *     message. List is sorted by time descending.
    */
+  /*
+  this is the original getMessages
   public List<Message> getMessages(String user) {
     List<Message> messages = new ArrayList<>();
-
+    System.out.println("getMessage\n\n\n");
+//setFiler shouldnt be present because it uses user
     Query query =
         new Query("Message")
             .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
@@ -79,7 +84,63 @@ public class Datastore {
     }
 
     return messages;
+  }*/
+  public Message foundMessage (Entity entity, String user) {
+  	String idString = entity.getKey().getName();
+       UUID id = UUID.fromString(idString);
+       String text = (String) entity.getProperty("text");
+       long timestamp = (long) entity.getProperty("timestamp");
+
+       Message message = new Message(id, user, text, timestamp);
+  	return message;
   }
+  public List<Message> getMessages(String user) {
+	    List<Message> messages = new ArrayList<>();
+	    System.out.println("getMessage\n\n\n");
+	//setFiler shouldnt be present because it uses user
+	    Query query =
+	        new Query("Message")
+	            .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
+	            .addSort("timestamp", SortDirection.DESCENDING);
+	    PreparedQuery results = datastore.prepare(query);
+
+	    for (Entity entity : results.asIterable()) {
+	      try {
+	      
+	        messages.add(foundMessage(entity,user));
+	       
+	      } catch (Exception e) {
+	        System.err.println("Error reading message.");
+	        System.err.println(entity.toString());
+	        e.printStackTrace();
+	      }
+	    }
+
+	    return messages;
+	  }
+  public List<Message> getAllMessages(){
+	  List<Message> messages = new ArrayList<>();
+
+	  Query query = new Query("Message")
+	    .addSort("timestamp", SortDirection.DESCENDING);
+	  PreparedQuery results = datastore.prepare(query);
+
+	  for (Entity entity : results.asIterable()) {
+	   try {
+		    String user = (String) entity.getProperty("user");
+
+	  
+	    messages.add(foundMessage(entity,user));
+	   } catch (Exception e) {
+	    System.err.println("Error reading message.");
+	    System.err.println(entity.toString());
+	    e.printStackTrace();
+	   }
+	  }
+
+	  return messages;
+	 }
+ 
 
    /** Stores the User in Datastore. */
   public void storeUser(User user) {
@@ -119,4 +180,5 @@ public class Datastore {
     }
     return users;
   }
+  
 }
