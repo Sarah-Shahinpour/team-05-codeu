@@ -31,154 +31,120 @@ import java.util.*;
 /** Provides access to the data stored in Datastore. */
 public class Datastore {
 
-  private DatastoreService datastore;
+	private DatastoreService datastore;
 
-  public Datastore() {
-    datastore = DatastoreServiceFactory.getDatastoreService();
-  }
+	public Datastore() {
+		datastore = DatastoreServiceFactory.getDatastoreService();
+	}
 
-  /** Stores the Message in Datastore. */
-  public void storeMessage(Message message) {
-	  System.out.println("Store Message\n\n\n");
+	/** Stores the Message in Datastore. */
+	public void storeMessage(Message message) {
+		System.out.println("Store Message\n\n\n");
 
-    Entity messageEntity = new Entity("Message", message.getId().toString());
-    messageEntity.setProperty("user", message.getUser());
-    messageEntity.setProperty("text", message.getText());
-    messageEntity.setProperty("timestamp", message.getTimestamp());
+		Entity messageEntity = new Entity("Message", message.getId().toString());
+		messageEntity.setProperty("user", message.getUser());
+		messageEntity.setProperty("text", message.getText());
+		messageEntity.setProperty("timestamp", message.getTimestamp());
 
-    datastore.put(messageEntity);
-  }
+		datastore.put(messageEntity);
+	}
 
-  /**
-   * Gets messages posted by a specific user.
-   *
-   * @return a list of messages posted by the user, or empty list if user has never posted a
-   *     message. List is sorted by time descending.
-   */
-  /*
-  this is the original getMessages
-  public List<Message> getMessages(String user) {
-    List<Message> messages = new ArrayList<>();
-    System.out.println("getMessage\n\n\n");
-//setFiler shouldnt be present because it uses user
-    Query query =
-        new Query("Message")
-            .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
-            .addSort("timestamp", SortDirection.DESCENDING);
-    PreparedQuery results = datastore.prepare(query);
+	/**
+	 * Gets messages posted by a specific user.
+	 *
+	 * @return a list of messages posted by the user, or empty list if user has
+	 *         never posted a message. List is sorted by time descending.
+	 */
 
-    for (Entity entity : results.asIterable()) {
-      try {
-        String idString = entity.getKey().getName();
-        UUID id = UUID.fromString(idString);
-        String text = (String) entity.getProperty("text");
-        long timestamp = (long) entity.getProperty("timestamp");
+	public Message foundMessage(Entity entity, String user) {
+		String idString = entity.getKey().getName();
+		UUID id = UUID.fromString(idString);
+		String text = (String) entity.getProperty("text");
+		long timestamp = (long) entity.getProperty("timestamp");
 
-        Message message = new Message(id, user, text, timestamp);
-        messages.add(message);
-      } catch (Exception e) {
-        System.err.println("Error reading message.");
-        System.err.println(entity.toString());
-        e.printStackTrace();
-      }
-    }
+		Message message = new Message(id, user, text, timestamp);
+		return message;
+	}
 
-    return messages;
-  }*/
-  public Message foundMessage (Entity entity, String user) {
-  	String idString = entity.getKey().getName();
-       UUID id = UUID.fromString(idString);
-       String text = (String) entity.getProperty("text");
-       long timestamp = (long) entity.getProperty("timestamp");
+	public List<Message> getMessages(String user) {
+		List<Message> messages = new ArrayList<>();
+		System.out.println("getMessage\n\n\n");
+		// setFiler shouldnt be present because it uses user
+		Query query = new Query("Message").setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
+				.addSort("timestamp", SortDirection.DESCENDING);
+		PreparedQuery results = datastore.prepare(query);
 
-       Message message = new Message(id, user, text, timestamp);
-  	return message;
-  }
-  public List<Message> getMessages(String user) {
-	    List<Message> messages = new ArrayList<>();
-	    System.out.println("getMessage\n\n\n");
-	//setFiler shouldnt be present because it uses user
-	    Query query =
-	        new Query("Message")
-	            .setFilter(new Query.FilterPredicate("user", FilterOperator.EQUAL, user))
-	            .addSort("timestamp", SortDirection.DESCENDING);
-	    PreparedQuery results = datastore.prepare(query);
+		for (Entity entity : results.asIterable()) {
+			try {
 
-	    for (Entity entity : results.asIterable()) {
-	      try {
-	      
-	        messages.add(foundMessage(entity,user));
-	       
-	      } catch (Exception e) {
-	        System.err.println("Error reading message.");
-	        System.err.println(entity.toString());
-	        e.printStackTrace();
-	      }
-	    }
+				messages.add(foundMessage(entity, user));
 
-	    return messages;
-	  }
-  public List<Message> getAllMessages(){
-	  List<Message> messages = new ArrayList<>();
+			} catch (Exception e) {
+				System.err.println("Error reading message.");
+				System.err.println(entity.toString());
+				e.printStackTrace();
+			}
+		}
 
-	  Query query = new Query("Message")
-	    .addSort("timestamp", SortDirection.DESCENDING);
-	  PreparedQuery results = datastore.prepare(query);
+		return messages;
+	}
 
-	  for (Entity entity : results.asIterable()) {
-	   try {
-		    String user = (String) entity.getProperty("user");
+	public List<Message> getAllMessages() {
+		List<Message> messages = new ArrayList<>();
 
-	  
-	    messages.add(foundMessage(entity,user));
-	   } catch (Exception e) {
-	    System.err.println("Error reading message.");
-	    System.err.println(entity.toString());
-	    e.printStackTrace();
-	   }
-	  }
+		Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
+		PreparedQuery results = datastore.prepare(query);
 
-	  return messages;
-	 }
- 
+		for (Entity entity : results.asIterable()) {
+			try {
+				String user = (String) entity.getProperty("user");
 
-   /** Stores the User in Datastore. */
-  public void storeUser(User user) {
-    Entity userEntity = new Entity("User", user.getEmail());
-    userEntity.setProperty("email", user.getEmail());
-    userEntity.setProperty("aboutMe", user.getAboutMe());
-    datastore.put(userEntity);
-  }
+				messages.add(foundMessage(entity, user));
+			} catch (Exception e) {
+				System.err.println("Error reading message.");
+				System.err.println(entity.toString());
+				e.printStackTrace();
+			}
+		}
 
-   /**
-   * Returns the User owned by the email address, or
-   * null if no matching User was found.
-   */
-  public User getUser(String email) {
+		return messages;
+	}
 
-    Query query = new Query("User")
-      .setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
-    PreparedQuery results = datastore.prepare(query);
-    Entity userEntity = results.asSingleEntity();
-    if(userEntity == null) {
-      return null;
-    }
+	/** Stores the User in Datastore. */
+	public void storeUser(User user) {
+		Entity userEntity = new Entity("User", user.getEmail());
+		userEntity.setProperty("email", user.getEmail());
+		userEntity.setProperty("aboutMe", user.getAboutMe());
+		datastore.put(userEntity);
+	}
 
-    String aboutMe = (String) userEntity.getProperty("aboutMe");
-    User user = new User(email, aboutMe);
+	/**
+	 * Returns the User owned by the email address, or null if no matching User was
+	 * found.
+	 */
+	public User getUser(String email) {
 
-    return user;
-  }
+		Query query = new Query("User").setFilter(new Query.FilterPredicate("email", FilterOperator.EQUAL, email));
+		PreparedQuery results = datastore.prepare(query);
+		Entity userEntity = results.asSingleEntity();
+		if (userEntity == null) {
+			return null;
+		}
 
+		String aboutMe = (String) userEntity.getProperty("aboutMe");
+		User user = new User(email, aboutMe);
 
-  public Set<String> getUsers(){
-    Set<String> users = new HashSet<>();
-    Query query = new Query("Message");
-    PreparedQuery results = datastore.prepare(query);
-    for(Entity entity : results.asIterable()) {
-      users.add((String) entity.getProperty("user"));
-    }
-    return users;
-  }
-  
+		return user;
+	}
+
+	public Set<String> getUsers() {
+		Set<String> users = new HashSet<>();
+		Query query = new Query("Message");
+		PreparedQuery results = datastore.prepare(query);
+		for (Entity entity : results.asIterable()) {
+			users.add((String) entity.getProperty("user"));
+		}
+		return users;
+	}
+
 }
