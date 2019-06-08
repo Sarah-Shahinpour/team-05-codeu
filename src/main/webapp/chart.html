@@ -27,7 +27,11 @@
     //Finally we draw it
     chart.draw(myTable)
     //The issue now is some of the Movies Above are not being displayed. We must then edit the chart's layout to fix this.
- 
+   var chart_options = {
+                          width: 800,
+                          height: 400
+            };
+    chart.draw(myTable,chart_options)
 
     }
 </script>
