@@ -80,7 +80,12 @@ public class MessageServlet extends HttpServlet {
 		Whitelist whitelist = Whitelist.simpleText​();
 		String text = Jsoup.clean(userEnteredContent, whitelist);
 
-		Message message = new Message(user, text);
+    
+		String regEx = "((http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png))";
+		String replacement = "<img src=\"$1\" />";
+		String textWithImagesReplaced = text.replaceAll(regEx, replacement);
+    
+		Message message = new Message(user, textWithImagesReplaced);
 		datastore.storeMessage(message);
 
 		response.sendRedirect("/user-page.html?user=" + user);
