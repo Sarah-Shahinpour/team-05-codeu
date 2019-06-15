@@ -57,7 +57,7 @@ function fetchAboutMe(){
     if(aboutMe == ''){
       aboutMe = 'This user has not entered any information yet.';
     }
-    
+
     aboutMeContainer.innerHTML = aboutMe;
 
   });
@@ -93,7 +93,7 @@ function buildMessageDiv(message) {
   const headerDiv = document.createElement('div');
   headerDiv.classList.add('message-header');
   headerDiv.appendChild(document.createTextNode(
-      message.user + ' - ' + new Date(message.timestamp)));
+      message.user + ' - ' + new Date(message.timestamp) + ' - sentiment:'+ String(message.score)));
 
   const bodyDiv = document.createElement('div');
   bodyDiv.classList.add('message-body');
