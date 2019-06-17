@@ -81,15 +81,12 @@ public class MessageServlet extends HttpServlet {
 
 		String user = userService.getCurrentUser().getEmail();
 		String userEnteredContent = request.getParameter("text");
-
-		Document doc = Document.newBuilder()
-        .setContent(userEnteredContent).setType(Document.Type.PLAIN_TEXT).build();
-    LanguageServiceClient languageService = LanguageServiceClient.create();
-    Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
-    float score = sentiment.getScore();
-    languageService.close();
-
-
+		Document doc = Document.newBuilder().setContent(userEnteredContent).setType(Document.Type.PLAIN_TEXT).build();
+		LanguageServiceClient languageService = LanguageServiceClient.create();
+		Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
+		float score = sentiment.getScore();
+		languageService.close();
+		
 		Whitelist whitelist = Whitelist.simpleText​();
 		String text = Jsoup.clean(userEnteredContent, whitelist);
 
