@@ -44,6 +44,7 @@ public class Datastore {
 		Entity messageEntity = new Entity("Message", message.getId().toString());
 		messageEntity.setProperty("user", message.getUser());
 		messageEntity.setProperty("text", message.getText());
+		messageEntity.setProperty("score",message.getScore());
 		messageEntity.setProperty("timestamp", message.getTimestamp());
 
 		datastore.put(messageEntity);
@@ -61,8 +62,8 @@ public class Datastore {
 		UUID id = UUID.fromString(idString);
 		String text = (String) entity.getProperty("text");
 		long timestamp = (long) entity.getProperty("timestamp");
-
-		Message message = new Message(id, user, text, timestamp);
+		double score = (double)entity.getProperty("score");
+		Message message = new Message(id, user, text, timestamp, score);
 		return message;
 	}
 

@@ -30,6 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
+import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.Sentiment;
+
 /** Handles fetching and saving {@link Message} instances. */
 @WebServlet("/messages")
 public class MessageServlet extends HttpServlet {
@@ -77,15 +81,21 @@ public class MessageServlet extends HttpServlet {
 
 		String user = userService.getCurrentUser().getEmail();
 		String userEnteredContent = request.getParameter("text");
+		Document doc = Document.newBuilder().setContent(userEnteredContent).setType(Document.Type.PLAIN_TEXT).build();
+		LanguageServiceClient languageService = LanguageServiceClient.create();
+		Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
+		float score = sentiment.getScore();
+		languageService.close();
+		
 		Whitelist whitelist = Whitelist.simpleText​();
 		String text = Jsoup.clean(userEnteredContent, whitelist);
 
-    
+
 		String regEx = "((http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png))";
 		String replacement = "<img src=\"$1\" />";
 		String textWithImagesReplaced = text.replaceAll(regEx, replacement);
-    
-		Message message = new Message(user, textWithImagesReplaced);
+
+		Message message = new Message(user, textWithImagesReplaced, score);
 		datastore.storeMessage(message);
 
 		response.sendRedirect("/user-page.html?user=" + user);
