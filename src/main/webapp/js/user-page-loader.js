@@ -107,10 +107,26 @@ function buildMessageDiv(message) {
   return messageDiv;
 }
 
+//This function uses the fetch() function to make a request to the /blobstore-upload-url.
+//This request is routed to our BlobstoreUploadUrlServlet, 
+//which responds with the Blobstore upload URL. 
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/blobstore-upload-url')
+    .then((response) => {
+      return response.text();
+    })
+    .then((imageUploadUrl) => {
+      const messageForm = document.getElementById('my-form');
+      messageForm.action = imageUploadUrl;
+      messageForm.classList.remove('hidden');
+    });
+}
+
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
   setPageTitle();
   fetchAboutMe();
   showMessageFormIfViewingSelf();
   fetchMessages();
+  fetchBlobstoreUrlAndShowForm();
 }

@@ -21,7 +21,28 @@ limitations under the License.
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user-page.css">
-    <script src="/js/user-page-loader.js"></script>
+    <script src="/js/user-page-loader.js">
+      function fetchBlobstoreUrlAndShowForm() {
+        fetch('/blobstore-upload-url')
+          .then((response) => {
+            return response.text();
+          })
+          .then((imageUploadUrl) => {
+            const messageForm = document.getElementById('my-form');
+            messageForm.action = imageUploadUrl;
+            messageForm.classList.remove('hidden');
+          });
+      }
+    </script>
+
+    <style>
+      /* Form is hidden by default. because it takes a couple seconds to fetch the Blobstore URL,
+       and we don’t want users to submit the form until after we set its action attribute. */
+      .hidden {
+        display: none;
+      }
+    </style>
+    
   </head>
   <body onload="buildUI();">
     <nav>
@@ -51,6 +72,16 @@ limitations under the License.
     <hr/>
 
     <div id="message-container">Loading...</div>
+
+    <form id="my-form" class="hidden" method="POST" enctype="multipart/form-data">
+      <p>Type some text:</p>
+      <textarea name="message"></textarea>
+      <br/>
+      <p>Upload an image:</p>
+      <input type="file" name="image">
+      <br/><br/>
+      <button>Submit</button>
+    </form>
 
   </body>
 </html>
