@@ -57,9 +57,9 @@
 
   function imgCycle(event){
     if(event.keyCode == '37'){
-     changeImage(-1)
+     changeImage(-1);
    } else if(event.keyCode == '39'){
-     changeImage()
+     changeImage();
     }
   }
 
