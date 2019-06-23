@@ -87,7 +87,7 @@ public class MessageServlet extends HttpServlet {
 		float score = sentiment.getScore();
 		languageService.close();
 		
-		Whitelist whitelist = Whitelist.simpleText​();
+		Whitelist whitelist = Whitelist.simpleText();
 		String text = Jsoup.clean(userEnteredContent, whitelist);
 
 
