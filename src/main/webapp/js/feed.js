@@ -1,6 +1,18 @@
  // Fetch messages and add them to the page.
   function fetchMessages(){
     const url = '/feed';
+    //In this commented section I tried iterating through the message 
+    //objects differently where it would return an array of 
+    //the image URLs
+
+    // var response = fetch(url).json();
+    // //This will be a list of the message URLs to put in the slider
+    // var messageImages = [];
+    // for (var message in response){
+    //   messageImages.push(messageToImage(message));
+    // }
+    // return messageImages; 
+
     fetch(url).then((response) => {
       return response.json();
     }).then((messages) => {
@@ -11,59 +23,67 @@
       else{
        messageContainer.innerHTML = '';
       }
+
+      //This will be a list of the message URLs to put in the slider
       messages.forEach((message) => {
-       const messageDiv = buildMessageDiv(message);
-       messageContainer.appendChild(messageDiv);
+        imgs.push(messageToImage(message)); 
       });
     });
   }
 
-  function buildMessageDiv(message){
-   const usernameDiv = document.createElement('div');
-   usernameDiv.classList.add("left-align");
-   usernameDiv.appendChild(document.createTextNode(message.user));
+  //Takes in a message and returns the image URL
+  function messageToImage(message){
+    //This is one method where it would create an image using canvas
+    // var canvas = document.createElement("CANVAS");
+    // canvas.fillstyle = "red";
+    // var dataURL = canvas.toDataURL("image/png");
+    // return dataURL;
+    
+    //The rest of this function grabs a random image from flickr we could
+    //possibly use as a background. I saw this code a few times when
+    //I was searching online
+    var keyword = "mountains";
 
-   const timeDiv = document.createElement('div');
-   timeDiv.classList.add('right-align');
-   timeDiv.appendChild(document.createTextNode(new Date(message.timestamp)));
+    $(document).ready(function(){
 
-   const headerDiv = document.createElement('div');
-   headerDiv.classList.add('message-header');
-   headerDiv.appendChild(usernameDiv);
-   headerDiv.appendChild(timeDiv);
+        $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?",
+        {
+            tags: keyword,
+            tagmode: "any",
+            format: "json"
+        },
+        function(data) {
+            var rnd = Math.floor(Math.random() * data.items.length);
 
-   const bodyDiv = document.createElement('div');
-   bodyDiv.classList.add('message-body');
-   bodyDiv.appendChild(document.createTextNode(message.text));
+            var image_src = data.items[rnd]['media']['m'].replace("_m", "_b");
 
-   const messageDiv = document.createElement('div');
-   messageDiv.classList.add("message-div");
-   messageDiv.appendChild(headerDiv);
-   messageDiv.appendChild(bodyDiv);
+        });
 
-   return messageDiv;
+    });
+    return ('" + image_src + "');
   }
 
   // Fetch data and populate the UI of the page.
   function buildUI(){
-   fetchMessages();
+   //fetchMessages();
   }
 
-  var imgs = ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQcFxcDSZWY92zdxEtntOW-nF3DWBFZww9jSjj740LmE22z2iy",
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyj7x-LZMI6Gb-kZsbFVsRD5tZsqepp_PdqrX0PEnRINeFqyEW",
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtqKb83jtoOxZMaVp66yopGaWWzTVImiK2M25CZSucfNPiy8YV"];
 
+  var imgs = [];
+  fetchMessages();
   document.addEventListener("keydown", imgCycle, false);
 
   function imgCycle(event){
     if(event.keyCode == '37'){
-     changeImage(-1);
-   } else if(event.keyCode == '39'){
-     changeImage();
+      changeImage(-1);
+    } else if(event.keyCode == '39'){
+      changeImage();
     }
   }
 
   function changeImage(dir){
-   var img = document.getElementById("imgClickAndChange");
-   img.src = imgs[imgs.indexOf(img.src) + (dir || 1)] || imgs[dir ? imgs.length - 1 : 0];
+    var img = document.getElementById("imgClickAndChange");
+    img.src = imgs[imgs.indexOf(img.src) + (dir || 1)] || imgs[dir ? imgs.length - 1 : 0];
   }
+
+    
