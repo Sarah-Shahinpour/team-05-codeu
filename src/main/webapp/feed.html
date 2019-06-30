@@ -1,21 +1,37 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Message Feed</title>
-<link rel="stylesheet" href="/css/main.css">
-<link rel="stylesheet" href="/css/user-page.css">
+  <head>
+    <style type="text/css">
+    .caption {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #f2f2f2;
+      font-size: 20px;
+    }
+    .slideshow {
+      max-width: 400px;
+      max-height: 400px;
+      position: relative;
+      margin: auto;
+    }
+    </style>
+    <title>Message Feed</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/user-page.css">
     <script src="/js/feed.js"></script>
-
   </head>
-<body onload="buildUI()">
- <div id="content">
-  <h1>Message Feed</h1>
-  <hr/>
-  <div id="message-container">Loading...</div>
- </div>
- <div id="slideshow">
-  <img alt="slideshow" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyj7x-LZMI6Gb-kZsbFVsRD5tZsqepp_PdqrX0PEnRINeFqyEW" id="imgClickAndChange" />
- </div>
-</body>
-
+  <body onload="buildUI()">
+    <div id="content">
+      <h1>Message Feed</h1>
+      <hr/>
+      <div id="message-container">Loading...</div>
+    </div>
+    <div class ="slideshow">
+      <img alt="slideshow" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyj7x-LZMI6Gb-kZsbFVsRD5tZsqepp_PdqrX0PEnRINeFqyEW" id="imgClickAndChange" />
+      <div class="caption" id="messageText">Caption Text</div>
+    </div>
+  </div>
+  </body>
 </html>
