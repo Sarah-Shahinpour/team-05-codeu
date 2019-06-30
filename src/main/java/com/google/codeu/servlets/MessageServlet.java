@@ -81,6 +81,11 @@ public class MessageServlet extends HttpServlet {
 
 		String user = userService.getCurrentUser().getEmail();
 		String userEnteredContent = request.getParameter("text");
+		String long1= request.getParameter("Longitude");
+		String lat1=request.getParameter("Latitude");
+		double latitude=Double.parseDouble(lat1);
+		double longitude=Double.parseDouble(long1);
+		
 		Document doc = Document.newBuilder().setContent(userEnteredContent).setType(Document.Type.PLAIN_TEXT).build();
 		LanguageServiceClient languageService = LanguageServiceClient.create();
 		Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
@@ -94,8 +99,19 @@ public class MessageServlet extends HttpServlet {
 		String regEx = "((http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png))";
 		String replacement = "<img src=\"$1\" />";
 		String textWithImagesReplaced = text.replaceAll(regEx, replacement);
+		
+		
+	
+		System.out.println("Long is:" + longitude);
+		System.out.println("Lat is:" + latitude);
+		
+		
+		
 
-		Message message = new Message(user, textWithImagesReplaced, score);
+		Message message = new Message(user, textWithImagesReplaced, score,longitude,latitude);
+		
+	
+		
 		datastore.storeMessage(message);
 
 		response.sendRedirect("/user-page.html?user=" + user);

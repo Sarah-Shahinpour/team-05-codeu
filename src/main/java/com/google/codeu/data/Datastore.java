@@ -46,6 +46,8 @@ public class Datastore {
 		messageEntity.setProperty("text", message.getText());
 		messageEntity.setProperty("score",message.getScore());
 		messageEntity.setProperty("timestamp", message.getTimestamp());
+		messageEntity.setProperty("longitude", message.getLongitude());
+		messageEntity.setProperty("latitude", message.getLatitude());
 
 		datastore.put(messageEntity);
 	}
@@ -63,7 +65,10 @@ public class Datastore {
 		String text = (String) entity.getProperty("text");
 		long timestamp = (long) entity.getProperty("timestamp");
 		double score = (double)entity.getProperty("score");
-		Message message = new Message(id, user, text, timestamp, score);
+		double longitude=(double) entity.getProperty("longitude");
+		double latitude=(double) entity.getProperty("latitude");
+
+		Message message = new Message(id, user, text, timestamp, score,longitude,latitude);
 		return message;
 	}
 
