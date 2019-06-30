@@ -63,7 +63,7 @@ function fetchAboutMe(){
   });
 }
 
-/** Fetches messages and add them to the page. */
+/** Fetches messages and add them to the page. */ 
 function fetchMessages() {
   const url = '/messages?user=' + parameterUsername;
   fetch(url)
@@ -121,6 +121,21 @@ function fetchBlobstoreUrlAndShowForm() {
       messageForm.classList.remove('hidden');
     });
 }
+function getLocation() {
+  var x=document.getElementById("Location");
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+ 
+  var x=document.getElementById("Location");
+  x.innerHTML = "Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude;
+}
 
 /** Fetches data and populates the UI of the page. */
 function buildUI() {
@@ -129,4 +144,6 @@ function buildUI() {
   showMessageFormIfViewingSelf();
   fetchMessages();
   fetchBlobstoreUrlAndShowForm();
+  getLocation();
 }
+ 
