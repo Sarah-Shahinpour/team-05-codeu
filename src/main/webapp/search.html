@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Search Page</title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    Select what type of message you want<br/><br/>
+    <select name="select">
+    <option>Gossip</option>
+    <option>Science</option>
+    <option>Economy</option>
+    </select>
+
+    <br/><br/>
+    Positive or Negative?<br/><br/>
+    <input type="checkbox" name="attitude" value="pos"> Positive<br>
+    <input type="checkbox" name="attitude" value="neg"> Negative<br>
+
+    <br/>
+    <form action="" method="get">
+    Do you want to only see the message in your neighborhood?<br/><br/>
+    <label><input name="choice" type="radio" value="" />Yes </label>
+    <label><input name="choice" type="radio" value="" />No </label>
+    </form>
+    
+    <form>
+      <button formaction="/feed.html">submit</button>
+    </form>
+  </body>
+</html>
