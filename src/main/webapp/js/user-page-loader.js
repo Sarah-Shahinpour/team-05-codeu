@@ -124,7 +124,6 @@ function fetchBlobstoreUrlAndShowForm() {
 var long;
 var lat;
 function getLocation() {
-
   var x=document.getElementById("page-title");
 
   if (navigator.geolocation) {
@@ -135,18 +134,12 @@ function getLocation() {
 }
 
 function showPosition(position) {
-
-
- var la=document.getElementById("latID");
- var lo=document.getElementById("longID");
+  var la=document.getElementById("latID");
+  var lo=document.getElementById("longID");
   long=position.coords.longitude;
   lat=position.coords.latitude;
-
   la.innerHTML=lat;
   lo.innerHTML=long;
-
-
-
 }
 
 /** Fetches data and populates the UI of the page. */
