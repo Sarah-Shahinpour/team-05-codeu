@@ -1,3 +1,5 @@
+  var imgs = [];
+  var imgText = [];
  // Fetch messages and add them to the slideshow.
   function fetchMessages(){
     const url = '/feed';
@@ -12,11 +14,19 @@
        messageContainer.innerHTML = '';
       }
 
-      //This will be a list of the message URLs to put in the slider
+      var count=0;
       messages.forEach((message) => {
-        imgs.push(messageToImage(message)); 
+
+
+
+        imgs[count]=messageToImage(message); 
         //This stores all the messages in an array
-        imgText.push(message.text);
+        
+        imgText[count]=message.text;
+
+
+        count=count+1;
+
       });
     });
   }
@@ -28,29 +38,28 @@
   }
 
   // Fetch data and populate the UI of the page.
+
+
+  document.addEventListener("keydown", imgCycle, false);
+  
   function buildUI(){
-   //fetchMessages();
+    fetchMessages();
   }
 
 
-  var imgs = [];
-  var imgText = [];
-  fetchMessages();
-  document.addEventListener("keydown", imgCycle, false);
 
   function imgCycle(event){
     if(event.keyCode == '37'){
       changeImage(-1);
     } else if(event.keyCode == '39'){
-      changeImage();
+      changeImage(1);
     }
   }
+
 
   function changeImage(dir){
     var img = document.getElementById("imgClickAndChange");
     img.src = imgs[imgs.indexOf(img.src) + (dir || 1)] || imgs[dir ? imgs.length - 1 : 0];
     var messageText = document.getElementById("messageText");
-    messageText.innerHTML = imgText[imgText.indexOf(img.src) + (dir || 1)] || imgs[dir ? imgs.length - 1 : 0];
+    messageText.innerHTML = imgText[imgText.indexOf(messageText.innerHTML) + (dir || 1)] || imgText[dir ? imgText.length - 1 : 0];
   }
-
-    
