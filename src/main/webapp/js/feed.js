@@ -28,6 +28,7 @@
         count=count+1;
 
       });
+      initialScreen();    
     });
   }
 
@@ -56,10 +57,17 @@
     }
   }
 
+  function initialScreen(){
+    var img = document.getElementById("imgClickAndChange");
+    img.src = imgs[0];
+    var messageText = document.getElementById("messageText");
+    messageText.innerHTML = imgText[0];
 
+  }
   function changeImage(dir){
     var img = document.getElementById("imgClickAndChange");
     img.src = imgs[imgs.indexOf(img.src) + (dir || 1)] || imgs[dir ? imgs.length - 1 : 0];
     var messageText = document.getElementById("messageText");
     messageText.innerHTML = imgText[imgText.indexOf(messageText.innerHTML) + (dir || 1)] || imgText[dir ? imgText.length - 1 : 0];
+ 
   }
