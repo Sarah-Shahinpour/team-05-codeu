@@ -9,7 +9,7 @@ var x=document.getElementById("1").checked;
 
 }
 
-function myFunction(){
+function goToMessages(){
 
 var distanceChoice="near";
 if(document.getElementById("notNear").checked==true){
