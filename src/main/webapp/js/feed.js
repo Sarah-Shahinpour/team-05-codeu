@@ -62,6 +62,7 @@
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c;
     //return d; // returns the distance in meter
+    //Distance is distance in miles now
     var distance=d* 0.00062137;
     return distance;
   }
