@@ -3,10 +3,12 @@
   <head>
     <title>Search Page</title>
     <meta charset="UTF-8">
+    <script src="/js/search.js"></script>
+
   </head>
   <body>
     Select what type of message you want<br/><br/>
-    <select name="select">
+    <select name="select" id="selection">
     <option>Gossip</option>
     <option>Science</option>
     <option>Economy</option>
@@ -14,18 +16,15 @@
 
     <br/><br/>
     Positive or Negative?<br/><br/>
-    <input type="checkbox" name="attitude" value="pos"> Positive<br>
-    <input type="checkbox" name="attitude" value="neg"> Negative<br>
+    <input type="radio" name="group1" value="pos" checked id="positive"> Positive<br>
+    <input type="radio" name="group1" value="neg" id="negative"> Negative<br>
 
     <br/>
-    <form action="" method="get">
-    Do you want to only see the message in your neighborhood?<br/><br/>
-    <label><input name="choice" type="radio" value="" />Yes </label>
-    <label><input name="choice" type="radio" value="" />No </label>
-    </form>
     
-    <form>
-      <button formaction="/feed.html">submit</button>
-    </form>
+    Do you want to only see the message in your neighborhood?<br/><br/>
+
+    <input type="radio"  name="group2" checked id="near"> Yes<br>
+    <input type="radio" name="group2" id="notNear"> No<br>    
+    <button onclick="goToMessages()">Click me</button>
   </body>
 </html>
