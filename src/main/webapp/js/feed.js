@@ -13,7 +13,7 @@
       else{
        messageContainer.innerHTML = '';
       }
-
+   
       var count=0;
       messages.forEach((message) => {
 
@@ -45,10 +45,32 @@
   
   function buildUI(){
     fetchMessages();
+    //var bob=getDistance(-73.946665,40.831498,-73.929216,40.857461);
+    //console.log(bob);
   }
 
 
-
+  //Used Haversine formula located here: https://stackoverflow.com/questions/1502590/calculate-distance-between-two-points-in-google-maps-v3
+  //With some modifications to the code
+  function getDistance(long1, lat1,long2,lat2) {
+    var R = 6378137; // Earth’s mean radius in meter
+    var dLat = rad(lat2 - lat1);
+    var dLong = rad(long2 - long1);
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(rad(lat1)) * Math.cos(rad(lat2)) *
+    Math.sin(dLong / 2) * Math.sin(dLong / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c;
+    //return d; // returns the distance in meter
+    //Distance is distance in miles now
+    var distance=d* 0.00062137;
+    return distance;
+  }
+  
+  function rad(x) {
+    return x * Math.PI / 180;
+  
+  }
   function imgCycle(event){
     if(event.keyCode == '37'){
       changeImage(-1);
