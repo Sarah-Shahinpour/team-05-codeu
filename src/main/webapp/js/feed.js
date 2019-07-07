@@ -29,6 +29,7 @@
   var emotion=true;
   var type="Gossip";
   var distanceApart=2.0;
+  var messageFound=false;
 
   function decode(){
     var words=parameterUsername.split("_");
@@ -103,6 +104,7 @@
             imgs[count]=messageToImage(message); 
             imgText[count]=message.text;
             count=count+1; 
+            messageFound=true;
 
             }
             else if (emotion==false && message.score>=-1.0 && message.score<=0){
@@ -110,6 +112,7 @@
               imgs[count]=messageToImage(message); 
               imgText[count]=message.text;
               count=count+1;
+              messageFound=true;
             }     
           }
         
@@ -124,7 +127,8 @@
 
             imgs[count]=messageToImage(message); 
             imgText[count]=message.text;
-            count=count+1; 
+            count=count+1;
+            messageFound=true; 
 
             }
             //This means they want negative messages
@@ -132,6 +136,7 @@
             imgs[count]=messageToImage(message); 
             imgText[count]=message.text;
             count=count+1;
+            messageFound=true;
             }  
         }
 
@@ -181,10 +186,12 @@
     return x * Math.PI / 180;
   }
   function imgCycle(event){
-    if(event.keyCode == '37'){
-      changeImage(-1);
-    } else if(event.keyCode == '39'){
-      changeImage(1);
+    if(messageFound==true){
+      if(event.keyCode == '37'){
+        changeImage(-1);
+      } else if(event.keyCode == '39'){
+        changeImage(1);
+      }
     }
   }
   function initialScreen(){
