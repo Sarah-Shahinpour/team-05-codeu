@@ -15,8 +15,18 @@
  */
 
 /* Prevent the page from becoming too wide. */
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
 body {
-  max-width: 600px;
+  background-color: transparent;
+  height: 100%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("https://tse2-mm.cn.bing.net/th?id=OIP.p9BaQ4X70VwEnq20p0RHdQHaEo&w=268&h=167&c=7&o=5&dpr=2&pid=1.7");
 }
 
 /* Remove bullet points from navigation bar. */
@@ -29,4 +39,8 @@ nav ul {
 nav li {
   display: inline-block;
   margin-right: 10px
+}
+
+h1{
+  text-align:center;
 }
