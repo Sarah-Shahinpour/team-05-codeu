@@ -4,9 +4,17 @@
     <title>Search Page</title>
     <meta charset="UTF-8">
     <script src="/js/search.js"></script>
-
+    <link rel="stylesheet" href="/css/navigation.css">
+    <script src="/js/navigation-loader.js"></script>
   </head>
-  <body>
+  <body onload="addLoginOrLogoutLinkToNavigation();">
+    <nav>
+      <ul id="navigation">
+        <li><a href="/">Home</a></li>
+        <li><a href="/aboutus.html">About Our Team</a></li>
+        <li><a href="/search.html">View</a></li>
+      </ul>
+    </nav>
     Select what type of message you want<br/><br/>
     <select name="select" id="selection">
     <option>Gossip</option>
