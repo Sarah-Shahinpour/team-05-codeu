@@ -23,9 +23,9 @@ function goToMessages(){
 
 	var choice=document.getElementById("selection").value;
 
+	
 
-
-	var url="/feed.html?user="+distanceChoice+emotion+choice;
+	var url="/feed.html?user="+distanceChoice + "_"+emotion+"_"+choice+"_";
 	console.log(url);
 	console.log("hi");
 
