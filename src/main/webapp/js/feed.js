@@ -1,5 +1,53 @@
+  // Get ?user=XYZ parameter value
+  const urlParams = new URLSearchParams(window.location.search);
+  const parameterUsername = urlParams.get('user');
+  // URL must include ?user=XYZ parameter. If not, redirect to homepage.
+  if (!parameterUsername) {
+    window.location.replace('/');
+  }
   var imgs = [];
   var imgText = [];
+  var currentLong;
+  var currentLat;
+  var near=true;
+  var emotion=true;
+  var type="Gossip";
+
+
+  function decode(){
+    var words=parameterUsername.split("_");
+    if (words.length==4){
+      if(nearBy=="notNear"){
+      near=false;
+      }
+      if(words[1]=="negative"){
+        emotion=false;
+      }
+
+      type=words[2];
+    }
+    else{
+      console.log("NOOOO")
+      window.location.replace('/');
+
+    }
+  }
+  function getLocation() {
+    var x=document.getElementById("Message Title");
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+  }
+
+
+
+
+  function showPosition(position) {
+    currentLong=position.coords.longitude;
+    currentLat=position.coords.latitude;
+  }
  // Fetch messages and add them to the slideshow.
   function fetchMessages(){
     const url = '/feed';
@@ -13,43 +61,35 @@
       else{
        messageContainer.innerHTML = '';
       }
-   
       var count=0;
       messages.forEach((message) => {
-
-
-
         imgs[count]=messageToImage(message); 
         //This stores all the messages in an array
-        
         imgText[count]=message.text;
-
-
         count=count+1;
-
       });
       initialScreen();    
     });
   }
-
   //Takes in a message and returns the image URL
   function messageToImage(message){
     //gets a random image 400x400
     return ("http://lorempixel.com/400/400");
   }
-
   // Fetch data and populate the UI of the page.
-
-
   document.addEventListener("keydown", imgCycle, false);
-  
   function buildUI(){
     fetchMessages();
     //var bob=getDistance(-73.946665,40.831498,-73.929216,40.857461);
     //console.log(bob);
+    console.log("URLParams:" +urlParams);
+    console.log("----");
+    //This one would have what is next to the equals sign. The User's input.
+    console.log("URLParams:" +parameterUsername);
+    getLocation();
+    decode();
+
   }
-
-
   //Used Haversine formula located here: https://stackoverflow.com/questions/1502590/calculate-distance-between-two-points-in-google-maps-v3
   //With some modifications to the code
   function getDistance(long1, lat1,long2,lat2) {
@@ -66,10 +106,8 @@
     var distance=d* 0.00062137;
     return distance;
   }
-  
   function rad(x) {
     return x * Math.PI / 180;
-  
   }
   function imgCycle(event){
     if(event.keyCode == '37'){
@@ -78,13 +116,11 @@
       changeImage(1);
     }
   }
-
   function initialScreen(){
     var img = document.getElementById("imgClickAndChange");
     img.src = imgs[0];
     var messageText = document.getElementById("messageText");
     messageText.innerHTML = imgText[0];
-
   }
   var current=0;
   function changeImage(dir){
@@ -100,9 +136,7 @@
       }
       else{
         current=current+1;
-
       }
-
     }
     else{
       //Going Left
@@ -116,3 +150,4 @@
   img.src = imgs[current];
   messageText.innerHTML = imgText[current];
   }
+
