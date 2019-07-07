@@ -21,6 +21,7 @@ limitations under the License.
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user-page.css">
+    <link rel="stylesheet" href="/css/navigation.css">
     <script src="/js/user-page-loader.js">
       function fetchBlobstoreUrlAndShowForm() {
         fetch('/blobstore-upload-url')
@@ -71,16 +72,16 @@ limitations under the License.
     </div>
 
     <form id="message-form" action="/messages" method="POST" class="hidden">
-     
+
       Enter a new message:
       <br/>
       <textarea name="text" id="message-input"></textarea>
-      
+
       <textarea hidden name="Longitude" id="longID"></textarea>
       <textarea hidden name="Latitude" id="latID"></textarea>
       <br/>
       <input type="submit" value="Submit">
-    
+
     </form>
     <hr/>
 
