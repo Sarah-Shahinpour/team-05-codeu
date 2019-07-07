@@ -1,3 +1,19 @@
+  /*
+     //This stores all the messages in an array
+        if(near==true){
+        //Pick Nearby Messages Only
+        if(getDistance(currentLong,currentLat,message.longitude,))
+        }
+        else{
+        //Every Message
+        imgs[count]=messageToImage(message); 
+        imgText[count]=message.text;
+        count=count+1;
+        }
+
+*/
+
+
   // Get ?user=XYZ parameter value
   const urlParams = new URLSearchParams(window.location.search);
   const parameterUsername = urlParams.get('user');
@@ -12,12 +28,12 @@
   var near=true;
   var emotion=true;
   var type="Gossip";
-
+  var distanceApart=2.0;
 
   function decode(){
     var words=parameterUsername.split("_");
     if (words.length==4){
-      if(nearBy=="notNear"){
+      if(near=="notNear"){
       near=false;
       }
       if(words[1]=="negative"){
@@ -50,6 +66,18 @@
   }
  // Fetch messages and add them to the slideshow.
   function fetchMessages(){
+  
+  /*
+  var imgs = [];
+  var imgText = [];
+  var currentLong;
+  var currentLat;
+  var near=true;
+  var emotion=true;
+  var type="Gossip";
+  function getDistance(long1, lat1,long2,lat2) 
+*/
+
     const url = '/feed';
     fetch(url).then((response) => {
       return response.json();
@@ -63,10 +91,52 @@
       }
       var count=0;
       messages.forEach((message) => {
-        imgs[count]=messageToImage(message); 
-        //This stores all the messages in an array
-        imgText[count]=message.text;
-        count=count+1;
+       //This stores all the messages in an array
+       //Don't Take Account of Type!!!, only emotion and Distance
+        if(near==true){
+          //This means user wants nearby Message
+          if(getDistance(currentLong,currentLat,message.longitude,message.latitude)<=distanceApart){
+            //This means they are within distanceApart miles away. Currently it is set to two miles.
+            //Now check if they want positive or negative messages
+            if(emotion && message.score>=0 && message.score<=1.0){
+              //This means they want positive messages
+            imgs[count]=messageToImage(message); 
+            imgText[count]=message.text;
+            count=count+1; 
+
+            }
+            else if (emotion==false && message.score>=-1.0 && message.score<=0){
+              //This means they want negative messages
+              imgs[count]=messageToImage(message); 
+              imgText[count]=message.text;
+              count=count+1;
+            }     
+          }
+        
+
+        }
+
+        else{
+          //This means they don't care about distance preferences
+
+          //This means they want positive messages
+            if(emotion && message.score>=0 && message.score<=1.0){
+
+            imgs[count]=messageToImage(message); 
+            imgText[count]=message.text;
+            count=count+1; 
+
+            }
+            //This means they want negative messages
+            else if (emotion==false && message.score>=-1.0 && message.score<=0){
+            imgs[count]=messageToImage(message); 
+            imgText[count]=message.text;
+            count=count+1;
+            }  
+        }
+
+      
+
       });
       initialScreen();    
     });
@@ -79,6 +149,8 @@
   // Fetch data and populate the UI of the page.
   document.addEventListener("keydown", imgCycle, false);
   function buildUI(){
+    getLocation();
+    decode();
     fetchMessages();
     //var bob=getDistance(-73.946665,40.831498,-73.929216,40.857461);
     //console.log(bob);
@@ -86,8 +158,7 @@
     console.log("----");
     //This one would have what is next to the equals sign. The User's input.
     console.log("URLParams:" +parameterUsername);
-    getLocation();
-    decode();
+
 
   }
   //Used Haversine formula located here: https://stackoverflow.com/questions/1502590/calculate-distance-between-two-points-in-google-maps-v3
