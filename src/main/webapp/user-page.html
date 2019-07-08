@@ -57,12 +57,6 @@ limitations under the License.
 
     <div id="about-me-container">Loading...</div>
 
-    <div>
-      <p>feature explanation:</p>
-      <p>you can share your story with the community by enter a new message below </p>
-      <p>or look others' story by click "view" on the navigation bar</p>
-    </div>
-
     <div id="about-me-form" class="hidden">
       <form action="/about" method="POST">
         <textarea name="about-me" placeholder="about me" rows=4 required></textarea>
@@ -71,6 +65,11 @@ limitations under the License.
       </form>
     </div>
 
+    <div>
+      <p>Feature Explanation: you can share your story with the community by enter a new message below. 
+      or look others' story by click "view" on the navigation bar</p>
+    </div>
+    
     <form id="message-form" action="/messages" method="POST" class="hidden">
 
       Enter a new message:
@@ -87,7 +86,7 @@ limitations under the License.
 
     <div id="message-container">Loading...</div>
 
-    <form id="my-form" class="hidden" method="POST" enctype="multipart/form-data">
+<!--     <form id="my-form" class="hidden" method="POST" enctype="multipart/form-data">
       <p>Type some text:</p>
       <textarea name="message"></textarea>
       <br/>
@@ -95,10 +94,9 @@ limitations under the License.
       <input type="file" name="image">
       <br/><br/>
       <button>Submit</button>
-    </form>
+    </form> -->
     <div id="locationDiv">
       <p id="Location"></p>
-
     </div>
 
 
