@@ -68,16 +68,7 @@
  // Fetch messages and add them to the slideshow.
   function fetchMessages(){
   
-  /*
-  var imgs = [];
-  var imgText = [];
-  var currentLong;
-  var currentLat;
-  var near=true;
-  var emotion=true;
-  var type="Gossip";
-  function getDistance(long1, lat1,long2,lat2) 
-*/
+
 
     const url = '/feed';
     fetch(url).then((response) => {
@@ -143,7 +134,11 @@
       
 
       });
-      initialScreen();    
+      if(messageFound==true){
+        initialScreen();
+      }   
+      noMessageAlert();
+ 
     });
   }
   //Takes in a message and returns the image URL
@@ -158,7 +153,8 @@
 
     if(messageFound==false){
       var x=document.getElementById("Message Title");
-      x.innerHTML = "Geolocation is not supported by this browser.";
+      x.innerHTML = "No messages to your preferences found";
+      console.log("YERRRR");
     }
 
   }
@@ -166,7 +162,6 @@
     getLocation();
     decode();
     fetchMessages();
-    noMessageAlert();
     
 
 
