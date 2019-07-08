@@ -153,16 +153,21 @@
   }
   // Fetch data and populate the UI of the page.
   document.addEventListener("keydown", imgCycle, false);
+  
+  function noMessageAlert(){
+
+    if(messageFound==false){
+      var x=document.getElementById("Message Title");
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+
+  }
   function buildUI(){
     getLocation();
     decode();
     fetchMessages();
-    //var bob=getDistance(-73.946665,40.831498,-73.929216,40.857461);
-    //console.log(bob);
-    console.log("URLParams:" +urlParams);
-    console.log("----");
-    //This one would have what is next to the equals sign. The User's input.
-    console.log("URLParams:" +parameterUsername);
+    noMessageAlert();
+    
 
 
   }
