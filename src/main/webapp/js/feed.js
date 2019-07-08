@@ -18,7 +18,7 @@
   function decode(){
     var words=parameterUsername.split("_");
     if (words.length==4){
-      if(near=="notNear"){
+      if(words[0]=="notNear"){
         near=false;
       }
       if(words[1]=="negative"){
