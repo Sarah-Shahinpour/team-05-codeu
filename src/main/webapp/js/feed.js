@@ -1,19 +1,3 @@
-  /*
-     //This stores all the messages in an array
-        if(near==true){
-        //Pick Nearby Messages Only
-        if(getDistance(currentLong,currentLat,message.longitude,))
-        }
-        else{
-        //Every Message
-        imgs[count]=messageToImage(message); 
-        imgText[count]=message.text;
-        count=count+1;
-        }
-
-*/
-
-
   // Get ?user=XYZ parameter value
   const urlParams = new URLSearchParams(window.location.search);
   const parameterUsername = urlParams.get('user');
