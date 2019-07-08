@@ -1,6 +1,55 @@
+  // Get ?user=XYZ parameter value
+  const urlParams = new URLSearchParams(window.location.search);
+  const parameterUsername = urlParams.get('user');
+  // URL must include ?user=XYZ parameter. If not, redirect to homepage.
+  if (!parameterUsername) {
+    window.location.replace('/');
+  }
   var imgs = [];
   var imgText = [];
- // Fetch messages and add them to the slideshow.
+  var currentLong;
+  var currentLat;
+  var near=true;
+  var emotion=true;
+  var type="Gossip";
+  var distanceApart=2.0;
+  var messageFound=false;
+
+  function decode(){
+    var words=parameterUsername.split("_");
+    if (words.length==4){
+      if(near=="notNear"){
+        near=false;
+      }
+      if(words[1]=="negative"){
+        emotion=false;
+      }
+
+      type=words[2];
+    }
+    else{
+      console.log("NOOOO")
+      window.location.replace('/');
+
+    }
+  }
+  function getLocation() {
+    var x=document.getElementById("Message Title");
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+  }
+
+
+
+
+  function showPosition(position) {
+    currentLong=position.coords.longitude;
+    currentLat=position.coords.latitude;
+  }
+  //Fetch messages and add them to the slideshow.
   function fetchMessages(){
     const url = '/feed';
     fetch(url).then((response) => {
@@ -8,48 +57,84 @@
     }).then((messages) => {
       const messageContainer = document.getElementById('message-container');
       if(messages.length == 0){
-       messageContainer.innerHTML = '<p>There are no posts yet.</p>';
+        messageContainer.innerHTML = '<p>There are no posts yet.</p>';
       }
       else{
-       messageContainer.innerHTML = '';
+        messageContainer.innerHTML = '';
       }
-   
       var count=0;
       messages.forEach((message) => {
-
-
-
-        imgs[count]=messageToImage(message); 
         //This stores all the messages in an array
+        //Don't Take Account of Type!!!, only emotion and Distance
+        if(near==true){
+          //This means user wants nearby Message
+          if(getDistance(currentLong,currentLat,message.longitude,message.latitude)<=distanceApart){
+            //This means they are within distanceApart miles away. Currently it is set to two miles.
+            //Now check if they want positive or negative messages
+            if(emotion && message.score>=0 && message.score<=1.0){
+            //This means they want positive messages
+            imgs[count]=messageToImage(message); 
+            imgText[count]=message.text;
+            count=count+1; 
+            messageFound=true;
+
+            }
+            else if (emotion==false && message.score>=-1.0 && message.score<=0){
+              //This means they want negative messages
+              imgs[count]=messageToImage(message); 
+              imgText[count]=message.text;
+              count=count+1;
+              messageFound=true;
+            }     
+          }
         
-        imgText[count]=message.text;
 
+        }
 
-        count=count+1;
-
+        else{
+          //This means they don't care about distance preferences
+          //This means they want positive messages
+          if(emotion && message.score>=0 && message.score<=1.0){
+            imgs[count]=messageToImage(message); 
+            imgText[count]=message.text;
+            count=count+1;
+            messageFound=true; 
+          }
+          //This means they want negative messages
+          else if (emotion==false && message.score>=-1.0 && message.score<=0){
+            imgs[count]=messageToImage(message); 
+            imgText[count]=message.text;
+            count=count+1;
+            messageFound=true;
+          }  
+        }
       });
-      initialScreen();    
+      if(messageFound==true){
+        initialScreen();
+      }   
+      noMessageAlert();
     });
   }
-
   //Takes in a message and returns the image URL
   function messageToImage(message){
     //gets a random image 400x400
     return ("http://lorempixel.com/400/400");
   }
-
   // Fetch data and populate the UI of the page.
-
-
   document.addEventListener("keydown", imgCycle, false);
   
-  function buildUI(){
-    fetchMessages();
-    //var bob=getDistance(-73.946665,40.831498,-73.929216,40.857461);
-    //console.log(bob);
+  function noMessageAlert(){
+    if(messageFound==false){
+      var x=document.getElementById("Message Title");
+      x.innerHTML = "No messages to your preferences found";
+      console.log("YERRRR");
+    }
   }
-
-
+  function buildUI(){
+    getLocation();
+    decode();
+    fetchMessages();
+  }
   //Used Haversine formula located here: https://stackoverflow.com/questions/1502590/calculate-distance-between-two-points-in-google-maps-v3
   //With some modifications to the code
   function getDistance(long1, lat1,long2,lat2) {
@@ -66,25 +151,23 @@
     var distance=d* 0.00062137;
     return distance;
   }
-  
   function rad(x) {
     return x * Math.PI / 180;
-  
   }
   function imgCycle(event){
-    if(event.keyCode == '37'){
-      changeImage(-1);
-    } else if(event.keyCode == '39'){
-      changeImage(1);
+    if(messageFound==true){
+      if(event.keyCode == '37'){
+        changeImage(-1);
+      } else if(event.keyCode == '39'){
+        changeImage(1);
+      }
     }
   }
-
   function initialScreen(){
     var img = document.getElementById("imgClickAndChange");
     img.src = imgs[0];
     var messageText = document.getElementById("messageText");
     messageText.innerHTML = imgText[0];
-
   }
   var current=0;
   function changeImage(dir){
@@ -100,9 +183,7 @@
       }
       else{
         current=current+1;
-
       }
-
     }
     else{
       //Going Left
@@ -113,6 +194,7 @@
         current=current-1;
       } 
     } 
-  img.src = imgs[current];
-  messageText.innerHTML = imgText[current];
+    img.src = imgs[current];
+    messageText.innerHTML = imgText[current];
   }
+
