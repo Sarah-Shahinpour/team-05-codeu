@@ -4,9 +4,12 @@
     <title>Search Page</title>
     <meta charset="UTF-8">
     <script src="/js/search.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/navigation.css">
     <script src="/js/navigation-loader.js"></script>
+    <link rel="stylesheet" href="/css/aboutus.css">
   </head>
+
   <body onload="addLoginOrLogoutLinkToNavigation();">
     <nav>
       <ul id="navigation">
@@ -15,24 +18,27 @@
         <li><a href="/search.html">View</a></li>
       </ul>
     </nav>
-    Select what type of message you want<br/><br/>
-    <select name="select" id="selection">
-    <option>Gossip</option>
-    <option>Science</option>
-    <option>Economy</option>
-    </select>
 
-    <br/><br/>
-    Positive or Negative?<br/><br/>
-    <input type="radio" name="group1" value="pos" checked id="positive"> Positive<br>
-    <input type="radio" name="group1" value="neg" id="negative"> Negative<br>
+    <div id="search">
+      <p>Select what type of message you want</p>
+      <select name="select" id="selection">
+      <option>Gossip</option>
+      <option>Science</option>
+      <option>Economy</option>
+      </select>
 
-    <br/>
-    
-    Do you want to only see the message in your neighborhood?<br/><br/>
+      <p>Positive or Negative?</p>
+      <input type="radio" name="group1" value="pos" checked id="positive"> Positive<br>
+      <input type="radio" name="group1" value="neg" id="negative"> Negative<br>
 
-    <input type="radio"  name="group2" checked id="near"> Yes<br>
-    <input type="radio" name="group2" id="notNear"> No<br>    
-    <button onclick="goToMessages()">Click me</button>
+      <p>Do you want to only see the message in your neighborhood?</p>
+
+      <input type="radio"  name="group2" checked id="near"> Yes<br>
+      <input type="radio" name="group2" id="notNear"> No<br>
+
+      </br>
+      <button onclick="goToMessages()">Click me</button>
+    </div>
+
   </body>
 </html>
