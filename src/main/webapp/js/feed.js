@@ -111,6 +111,8 @@
       });
       if(messageFound==true){
         initialScreen();
+        swal.fire("Stories Were Found!", "Click left or right arrows to cycle through stories", "success");
+
       }   
       noMessageAlert();
     });
@@ -126,14 +128,17 @@
   function noMessageAlert(){
     if(messageFound==false){
       var x=document.getElementById("Message Title");
-      x.innerHTML = "No messages to your preferences found";
-      console.log("YERRRR");
+      //x.innerHTML = "No messages to your preferences found";
+      swal.fire("Error: No Stories Found!", "Try to change your preferences, uploading a story, and/or trying at a later time", "warning");
     }
   }
   function buildUI(){
     getLocation();
     decode();
     fetchMessages();
+
+
+
   }
   //Used Haversine formula located here: https://stackoverflow.com/questions/1502590/calculate-distance-between-two-points-in-google-maps-v3
   //With some modifications to the code
