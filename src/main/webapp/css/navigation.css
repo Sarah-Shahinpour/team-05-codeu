@@ -26,10 +26,12 @@ li a:hover {
 button{
   display: block;
   color: white;
+  background-color: #4CAF50;
   text-align: center;
   padding: 14px 16px;
-  text-decoration: none;  
+  text-decoration: none;
 }
+
 nav{
   width: 100%;
 }
