@@ -22,6 +22,8 @@ limitations under the License.
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user-page.css">
     <link rel="stylesheet" href="/css/navigation.css">
+    <link rel="stylesheet" href="/css/aboutus.css">
+
     <script src="/js/user-page-loader.js">
       function fetchBlobstoreUrlAndShowForm() {
         fetch('/blobstore-upload-url')
@@ -57,19 +59,7 @@ limitations under the License.
 
     <div id="about-me-container">Loading...</div>
 
-    <div id="about-me-form" class="hidden">
-      <form action="/about" method="POST">
-        <textarea name="about-me" placeholder="about me" rows=4 required></textarea>
-        <br/>
-        <input type="submit" value="Submit">
-      </form>
-    </div>
-
-    <div>
-      <p>Feature Explanation: you can share your story with the community by enter a new message below. 
-      or look others' story by click "view" on the navigation bar</p>
-    </div>
-    
+    <div id="messageenter">
     <form id="message-form" action="/messages" method="POST" class="hidden">
 
       Enter a new message:
@@ -82,6 +72,7 @@ limitations under the License.
       <input type="submit" value="Submit">
 
     </form>
+    </div>
     <hr/>
 
     <div id="message-container">Loading...</div>

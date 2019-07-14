@@ -22,7 +22,9 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/user-page.css">
     <link rel="stylesheet" href="/css/navigation.css">
+    <link rel="stylesheet" href="/css/aboutus.css">
     <script src="/js/navigation-loader.js"></script>
+    <script src="/js/search.js"></script>
     <script src="/js/feed.js"></script>
   </head>
   <body onload="buildUI(); addLoginOrLogoutLinkToNavigation();">
@@ -33,15 +35,43 @@
         <li><a href="/search.html">View</a></li>
       </ul>
     </nav>
+    <div id="filter">
+      <div id="filter1">
+        <p>Select what type of message you want</p>
+        <select name="select" id="selection">
+        <option>Gossip</option>
+        <option>Science</option>
+        <option>Economy</option>
+        </select>
+      </div>
+
+      <div id="filter2">
+        <p>Positive or Negative?</p>
+        <input type="radio" name="group1" value="pos" checked id="positive"> Positive<br>
+        <input type="radio" name="group1" value="neg" id="negative"> Negative<br>
+      </div>
+
+      <div id="filter3">
+        <p>Do you want to only see the message in your neighborhood?</p>
+        <input type="radio"  name="group2" checked id="near"> Yes<br>
+        <input type="radio" name="group2" id="notNear"> No<br>
+      </div>
+
+      <div id="filterbutton">
+          <button onclick="goToMessages()">Click me</button>
+      </div>
+    </div>
+
     <div id="content">
       <h1 id="Message Title">Message Feed</h1>
       <hr/>
       <div id="message-container">Loading...</div>
     </div>
+
     <div class ="slideshow">
       <img alt="slideshow" src="http://lorempixel.com/400/400" id="imgClickAndChange" />
       <div class="caption" id="messageText"></div>
     </div>
-  </div>
+
   </body>
 </html>
