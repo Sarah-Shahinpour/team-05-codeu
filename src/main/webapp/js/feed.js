@@ -175,7 +175,7 @@
   function initialScreen(){
     var img = document.getElementById("imgClickAndChange");
     img.src = imgs[0];
-    img.style.opacity = ".75";
+    img.style.filter = "blur(1.5px)";
     var messageText = document.getElementById("messageText");
     messageText.innerHTML = imgText[0];
   }
