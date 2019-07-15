@@ -84,7 +84,7 @@
               //This means they want positive messages
 
               if(message.category==type){
-                imgs[count]=messageToImage(message); 
+                imgs[count]=messageToImage(type); 
                 imgText[count]=message.text;
                 count=count+1; 
                 messageFound=true;
@@ -95,7 +95,7 @@
                 //This means they want negative messages
 
                 if(message.category==type){
-                  imgs[count]=messageToImage(message); 
+                  imgs[count]=messageToImage(type); 
                   imgText[count]=message.text;
                   count=count+1;
                   messageFound=true;
@@ -111,7 +111,7 @@
             //This means they want positive messages
             if(emotion && message.score>=0 && message.score<=1.0){
               if(message.category==type){
-                imgs[count]=messageToImage(message); 
+                imgs[count]=messageToImage(type); 
                 imgText[count]=message.text;
                 count=count+1;
                 messageFound=true; 
@@ -120,7 +120,7 @@
             //This means they want negative messages
             else if (emotion==false && message.score>=-1.0 && message.score<=0){
               if(message.category==type){
-                imgs[count]=messageToImage(message); 
+                imgs[count]=messageToImage(type); 
                 imgText[count]=message.text;
                 count=count+1;
                 messageFound=true;
@@ -141,9 +141,18 @@
     });
   }
   //Takes in a message and returns the image URL
-  function messageToImage(message){
+  function messageToImage(type){
     //gets a random image 400x400
-    return ("http://lorempixel.com/400/400");
+    if(type == "Gossip"){
+      return ("http://lorempixel.com/400/400/nightlife");
+    }else if(type == "Economy"){
+      return ("http://lorempixel.com/400/400/business");
+    }else if(type == "Science"){
+      return ("http://lorempixel.com/400/400/nature");
+    }else{
+      return ("http://lorempixel.com/400/400/abstract");
+    }
+    
   }
   // Fetch data and populate the UI of the page.
   document.addEventListener("keydown", imgCycle, false);
