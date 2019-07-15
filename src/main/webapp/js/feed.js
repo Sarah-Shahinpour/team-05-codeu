@@ -63,54 +63,60 @@
         messageContainer.innerHTML = '';
       }
       var count=0;
+      var patt1 = /\d/g;
+      var patt2 = /\s/g;
       messages.forEach((message) => {
         //This stores all the messages in an array
         //Don't Take Account of Type!!!, only emotion and Distance
-        if(near==true){
-          //This means user wants nearby Message
-          if(getDistance(currentLong,currentLat,message.longitude,message.latitude)<=distanceApart){
-            //This means they are within distanceApart miles away. Currently it is set to two miles.
-            //Now check if they want positive or negative messages
-            if(emotion && message.score>=0 && message.score<=1.0){
-            //This means they want positive messages
-            imgs[count]=messageToImage(message); 
-            imgText[count]=message.text;
-            count=count+1; 
-            messageFound=true;
+        if(message.text.replace(patt1,'').replace(patt2,'').length){
+          if(near==true){
+            //This means user wants nearby Message
+            if(getDistance(currentLong,currentLat,message.longitude,message.latitude)<=distanceApart){
+              //This means they are within distanceApart miles away. Currently it is set to two miles.
+              //Now check if they want positive or negative messages
+              if(emotion && message.score>=0 && message.score<=1.0){
+              //This means they want positive messages
+              imgs[count]=messageToImage(message); 
+              imgText[count]=message.text;
+              count=count+1; 
+              messageFound=true;
 
+              }
+              else if (emotion==false && message.score>=-1.0 && message.score<=0){
+                //This means they want negative messages
+                imgs[count]=messageToImage(message); 
+                imgText[count]=message.text;
+                count=count+1;
+                messageFound=true;
+              }     
             }
+          
+
+          }
+
+          else{
+            //This means they don't care about distance preferences
+            //This means they want positive messages
+            if(emotion && message.score>=0 && message.score<=1.0){
+              imgs[count]=messageToImage(message); 
+              imgText[count]=message.text;
+              count=count+1;
+              messageFound=true; 
+            }
+            //This means they want negative messages
             else if (emotion==false && message.score>=-1.0 && message.score<=0){
-              //This means they want negative messages
               imgs[count]=messageToImage(message); 
               imgText[count]=message.text;
               count=count+1;
               messageFound=true;
-            }     
+            }  
           }
-        
-
-        }
-
-        else{
-          //This means they don't care about distance preferences
-          //This means they want positive messages
-          if(emotion && message.score>=0 && message.score<=1.0){
-            imgs[count]=messageToImage(message); 
-            imgText[count]=message.text;
-            count=count+1;
-            messageFound=true; 
-          }
-          //This means they want negative messages
-          else if (emotion==false && message.score>=-1.0 && message.score<=0){
-            imgs[count]=messageToImage(message); 
-            imgText[count]=message.text;
-            count=count+1;
-            messageFound=true;
-          }  
         }
       });
       if(messageFound==true){
         initialScreen();
+        swal.fire("Stories Were Found!", "Click left or right arrows to cycle through stories", "success");
+
       }   
       noMessageAlert();
     });
@@ -126,14 +132,17 @@
   function noMessageAlert(){
     if(messageFound==false){
       var x=document.getElementById("Message Title");
-      x.innerHTML = "No messages to your preferences found";
-      console.log("YERRRR");
+      //x.innerHTML = "No messages to your preferences found";
+      swal.fire("Error: No Stories Found!", "Try to change your preferences, uploading a story, and/or trying at a later time", "warning");
     }
   }
   function buildUI(){
     getLocation();
     decode();
     fetchMessages();
+
+
+
   }
   //Used Haversine formula located here: https://stackoverflow.com/questions/1502590/calculate-distance-between-two-points-in-google-maps-v3
   //With some modifications to the code
