@@ -59,9 +59,16 @@ limitations under the License.
 
     <div id="about-me-container"></div>
 
-    <form id="message-form" action="/messages" method="POST" class="hidden">
+    <p>Select what type of message you want</p>
+      <select name="select" id="selection">
+      <option>Personal</option>
+      <option>Gossip</option>
+      <option>Science</option>
+      <option>Economy</option>
+      </select>
 
-      Enter a new message:
+    <form id="message-form" action="/messages" method="POST" class="hidden">
+      Enter the message:
       <br/>
       <textarea name="text" id="message-input"></textarea>
 
