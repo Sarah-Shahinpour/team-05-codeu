@@ -28,18 +28,19 @@ public class Message {
   private double longitude;
   private long timestamp;
   private double score;
+  private String category;
 
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
    * random ID and uses the current system time for the creation time.
    */
   
-  public Message(String user, String text, double score, double longitude, double latitude ) {
-    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), score,longitude, latitude);
+  public Message(String user, String text, double score, double longitude, double latitude, String category ) {
+    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), score,longitude, latitude,category);
   }
   
 
-  public Message(UUID id, String user, String text, long timestamp, double score, double longitude, double latitude) {
+  public Message(UUID id, String user, String text, long timestamp, double score, double longitude, double latitude, String category) {
     this.id = id;
     this.user = user;
     this.text = text;
@@ -47,6 +48,7 @@ public class Message {
     this.score = score;
     this.longitude=longitude;
     this.latitude=latitude;
+    this.category=category;
     
   }
 
@@ -60,6 +62,10 @@ public class Message {
 
   public String getText() {
     return text;
+  }
+
+  public String getCategory(){
+    return category;
   }
 
   public long getTimestamp() {

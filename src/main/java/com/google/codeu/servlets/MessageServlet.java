@@ -83,6 +83,10 @@ public class MessageServlet extends HttpServlet {
 		String userEnteredContent = request.getParameter("text");
 		String long1= request.getParameter("Longitude");
 		String lat1=request.getParameter("Latitude");
+		String category=request.getParameter("Category");
+
+		System.out.println("\n\n\n\n---" + category + "---\n\n\n\n");
+		
 		double latitude=Double.parseDouble(lat1);
 		double longitude=Double.parseDouble(long1);
 		
@@ -108,7 +112,7 @@ public class MessageServlet extends HttpServlet {
 		
 		
 
-		Message message = new Message(user, textWithImagesReplaced, score,longitude,latitude);
+		Message message = new Message(user, textWithImagesReplaced, score,longitude,latitude,category);
 		
 	
 		

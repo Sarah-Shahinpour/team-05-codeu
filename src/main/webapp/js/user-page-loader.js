@@ -84,6 +84,16 @@ function fetchMessages() {
       });
 }
 
+
+
+function changeCategory(){
+var choice=document.getElementById("selection").value;
+var internalText=document.getElementById("CategoryID")
+internalText.innerHTML=choice;
+
+}
+
+
 /**
  * Builds an element that displays the message.
  * @param {Message} message

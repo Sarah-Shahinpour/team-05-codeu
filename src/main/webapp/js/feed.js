@@ -66,6 +66,7 @@
       var patt1 = /\d/g;
       var patt2 = /\s/g;
       messages.forEach((message) => {
+        console.log(message.category);
         //This stores all the messages in an array
         //Don't Take Account of Type!!!, only emotion and Distance
         if(message.text.replace(patt1,'').replace(patt2,'').length){
