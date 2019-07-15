@@ -58,7 +58,7 @@ function fetchAboutMe(){
       aboutMe = 'This user has not entered any information yet.';
     }
 
-    aboutMeContainer.innerHTML = aboutMe;
+    //aboutMeContainer.innerHTML = aboutMe;
 
   });
 }
