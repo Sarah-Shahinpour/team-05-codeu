@@ -70,25 +70,36 @@
         //This stores all the messages in an array
         //Don't Take Account of Type!!!, only emotion and Distance
         if(message.text.replace(patt1,'').replace(patt2,'').length){
+          
+
+
+
           if(near==true){
             //This means user wants nearby Message
             if(getDistance(currentLong,currentLat,message.longitude,message.latitude)<=distanceApart){
               //This means they are within distanceApart miles away. Currently it is set to two miles.
               //Now check if they want positive or negative messages
               if(emotion && message.score>=0 && message.score<=1.0){
+
               //This means they want positive messages
-              imgs[count]=messageToImage(message); 
-              imgText[count]=message.text;
-              count=count+1; 
-              messageFound=true;
+
+              if(message.category==type){
+                imgs[count]=messageToImage(message); 
+                imgText[count]=message.text;
+                count=count+1; 
+                messageFound=true;
+              }
 
               }
               else if (emotion==false && message.score>=-1.0 && message.score<=0){
                 //This means they want negative messages
-                imgs[count]=messageToImage(message); 
-                imgText[count]=message.text;
-                count=count+1;
-                messageFound=true;
+
+                if(message.category==type){
+                  imgs[count]=messageToImage(message); 
+                  imgText[count]=message.text;
+                  count=count+1;
+                  messageFound=true;
+                }
               }     
             }
           
@@ -99,19 +110,26 @@
             //This means they don't care about distance preferences
             //This means they want positive messages
             if(emotion && message.score>=0 && message.score<=1.0){
-              imgs[count]=messageToImage(message); 
-              imgText[count]=message.text;
-              count=count+1;
-              messageFound=true; 
+              if(message.category==type){
+                imgs[count]=messageToImage(message); 
+                imgText[count]=message.text;
+                count=count+1;
+                messageFound=true; 
+              }
             }
             //This means they want negative messages
             else if (emotion==false && message.score>=-1.0 && message.score<=0){
-              imgs[count]=messageToImage(message); 
-              imgText[count]=message.text;
-              count=count+1;
-              messageFound=true;
+              if(message.category==type){
+                imgs[count]=messageToImage(message); 
+                imgText[count]=message.text;
+                count=count+1;
+                messageFound=true;
+              }
             }  
           }
+        
+
+
         }
       });
       if(messageFound==true){
