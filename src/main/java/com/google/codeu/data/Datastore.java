@@ -48,6 +48,7 @@ public class Datastore {
 		messageEntity.setProperty("timestamp", message.getTimestamp());
 		messageEntity.setProperty("longitude", message.getLongitude());
 		messageEntity.setProperty("latitude", message.getLatitude());
+		messageEntity.setProperty("category", message.getCategory());
 
 		datastore.put(messageEntity);
 	}
@@ -68,7 +69,9 @@ public class Datastore {
 		double longitude=(double) entity.getProperty("longitude");
 		double latitude=(double) entity.getProperty("latitude");
 
-		Message message = new Message(id, user, text, timestamp, score,longitude,latitude);
+		String category= (String) entity.getProperty("category");
+		
+		Message message = new Message(id, user, text, timestamp, score,longitude,latitude,category);
 		return message;
 	}
 

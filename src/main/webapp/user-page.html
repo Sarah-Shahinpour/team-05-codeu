@@ -59,18 +59,21 @@ limitations under the License.
 
     <div id="about-me-container"></div>
 
-    <p>Select what type of message you want</p>
-      <select name="select" id="selection">
+    <p>What is the category of your story?</p>
+      <select name="select" id="selection" onchange="changeCategory()">
       <option>Personal</option>
       <option>Gossip</option>
       <option>Science</option>
       <option>Economy</option>
       </select>
 
+
     <form id="message-form" action="/messages" method="POST" class="hidden">
-      Enter the message:
+      Enter the story you want to post:
       <br/>
       <textarea name="text" id="message-input" maxlength="190"></textarea>
+
+      <textarea hidden name="Category" id="CategoryID">Personal</textarea>
 
       <textarea hidden name="Longitude" id="longID"></textarea>
       <textarea hidden name="Latitude" id="latID"></textarea>
