@@ -49,7 +49,7 @@ public class Datastore {
 		messageEntity.setProperty("longitude", message.getLongitude());
 		messageEntity.setProperty("latitude", message.getLatitude());
 		messageEntity.setProperty("category", message.getCategory());
-		messageEntity.setProperty("like",message.getLike());
+		messageEntity.setProperty("like", message.getLike());
 		messageEntity.setProperty("id",message.getId().toString());
 
 		datastore.put(messageEntity);

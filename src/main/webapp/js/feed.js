@@ -21,9 +21,12 @@
 
 
 
+
+
   window.addEventListener('beforeunload',(event)=>{
     update();
   })
+
   function update(){
     console.log("UPDATING");
     var returnText="";
