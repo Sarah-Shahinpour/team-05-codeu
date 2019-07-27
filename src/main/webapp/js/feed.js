@@ -277,7 +277,8 @@
     if(messageFound==true){
       if(event.keyCode == '37'){
         likeCurrent=changeImage(-1);
-      } else if(event.keyCode == '39'){
+      } 
+      else if(event.keyCode == '39'){
         likeCurrent=changeImage(1);
       }
       document.getElementById("likeButton").innerHTML=like[likeCurrent];
