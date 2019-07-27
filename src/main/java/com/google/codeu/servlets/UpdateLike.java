@@ -50,16 +50,16 @@ public class UpdateLike extends HttpServlet {
 	while(output.length()>0){
 		currentIndex=output.indexOf('_');
 		currentWord=output.substring(0,currentIndex);
-    	System.out.println(currentWord);
+		System.out.println(currentWord);
 
-    	updateWord(currentWord);
+		updateWord(currentWord);
 		//datastore.checkingMessage(currentWord);
-    	output=output.substring(currentIndex+1);
-    	System.out.println("Length now is:"+output.length());
+		output=output.substring(currentIndex+1);
+		System.out.println("Length now is:"+output.length());
   }
 
 
-  	System.out.println("\n\n\n\n\n -------------------FINISHED UPDATE \n\n\n\n");
+	System.out.println("\n\n\n\n\n -------------------FINISHED UPDATE \n\n\n\n");
 
 
 	}
@@ -74,15 +74,11 @@ public class UpdateLike extends HttpServlet {
 		}
 		else{
 			//Now I have access to it, I need to make it a copy, increment, then create a entitiy for it
-       		 Message copyMessage= new Message(wordMessage.getUser(),wordMessage.getText(),wordMessage.getScore(),wordMessage.getLongitude(),wordMessage.getLatitude(),wordMessage.getCategory(),wordMessage.getLike());
+			Message copyMessage= new Message(wordMessage.getUser(),wordMessage.getText(),wordMessage.getScore(),wordMessage.getLongitude(),wordMessage.getLatitude(),wordMessage.getCategory(),wordMessage.getLike());
 
 			copyMessage.setLike(copyMessage.getLike()+1);
 			copyMessage.setId(wordMessage.getId());
 			datastore.storeMessage(copyMessage);
-
-
-
-
 		}
 
 
