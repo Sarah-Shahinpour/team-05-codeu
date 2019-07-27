@@ -128,6 +128,7 @@
         console.log(message.category);
         console.log("ID IS:"+message.id);
         console.log("LIKE IS:"+message.like);
+        var currentMessageLike=message.like;
         //This stores all the messages in an array
         //Don't Take Account of Type!!!, only emotion and Distance
         if(message.text.replace(patt1,'').replace(patt2,'').length){
@@ -147,7 +148,8 @@
               if(message.category==type){
                 imgs[count]=messageToImage(type); 
                 imgText[count]=message.text;
-                like[count]=0;
+                console.log("About to set "+currentMessageLike + "To " + count + "like");
+                like[count]=currentMessageLike;
                 hasLiked[count]=false;
                 messagID[count]=message.id;
                 count=count+1; 
@@ -161,7 +163,8 @@
                 if(message.category==type){
                   imgs[count]=messageToImage(type); 
                   imgText[count]=message.text;
-                  like[count]=0;
+                  console.log("About to set "+currentMessageLike + "To " + count + "like");
+                  like[count]=currentMessageLike;
                   hasLiked[count]=false;
                   messagID[count]=message.id;
                   count=count+1;
@@ -180,7 +183,8 @@
               if(message.category==type){
                 imgs[count]=messageToImage(type); 
                 imgText[count]=message.text;
-                like[count]=0;
+                console.log("About to set "+currentMessageLike + "To " + count + "like");
+                like[count]=currentMessageLike;
                 hasLiked[count]=false;
                 messagID[count]=message.id;
                 count=count+1;
@@ -192,7 +196,8 @@
               if(message.category==type){
                 imgs[count]=messageToImage(type); 
                 imgText[count]=message.text;
-                like[count]=0;
+                console.log("About to set "+currentMessageLike + "To " + count + "like");
+                like[count]=currentMessageLike;
                 hasLiked[count]=false;
                 messagID[count]=message.id;
                 count=count+1;

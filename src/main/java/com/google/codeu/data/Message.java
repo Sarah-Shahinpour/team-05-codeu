@@ -39,7 +39,7 @@ public class Message {
   public Message(String user, String text, double score, double longitude, double latitude, String category, double like ) {
     this(UUID.randomUUID(), user, text, System.currentTimeMillis(), score,longitude, latitude,category,like);
   }
-  
+
 
   public Message(UUID id, String user, String text, long timestamp, double score, double longitude, double latitude, String category,double like) {
     this.id = id;
@@ -59,7 +59,9 @@ public class Message {
   }
 
 
-
+  public void setId(UUID x){
+    this.id=x;
+  }
   public String getUser() {
     return user;
   }
