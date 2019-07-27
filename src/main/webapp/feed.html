@@ -24,6 +24,21 @@
       transform: translate(-50%, -50%);
     }
 
+
+    </style>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <style>
+      .fa {
+        font-size: 50px;
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .fa:hover {
+        color: darkblue;
+      }
+
+
     </style>
     <title>Message Feed</title>
     <link rel="stylesheet" href="/css/main.css">
@@ -89,6 +104,7 @@
     <div class ="slideshow" id="img_message">
       <img alt="slideshow" src="http://lorempixel.com/400/400" id="imgClickAndChange"/>
       <div class="caption" id="messageText"></div>
+      <i class="fa fa-thumbs-up" id="likeButton" onclick="likeButton()">0</i>
     </div>
 
     <img id="icon" src="icon.png">
