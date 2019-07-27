@@ -34,59 +34,59 @@ public class UpdateLike extends HttpServlet {
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-	String output=request.getParameter("sentText");
-	System.out.println("Get");
-	System.out.println(output);
+		String output=request.getParameter("sentText");
+		System.out.println("Get");
+		System.out.println(output);
 	}
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-	String output=request.getParameter("sentText");
-	System.out.println("Post");
-	System.out.println(output);	
- 	String currentWord="";
-	int currentIndex=0;
+		String output=request.getParameter("sentText");
+		System.out.println("Post");
+		System.out.println(output);	
+	 	String currentWord="";
+		int currentIndex=0;
 
-	while(output.length()>0){
-		currentIndex=output.indexOf('_');
-		currentWord=output.substring(0,currentIndex);
-		System.out.println(currentWord);
+		while(output.length()>0){
+			currentIndex=output.indexOf('_');
+			currentWord=output.substring(0,currentIndex);
+			System.out.println(currentWord);
 
-		updateWord(currentWord);
-		//datastore.checkingMessage(currentWord);
-		output=output.substring(currentIndex+1);
-		System.out.println("Length now is:"+output.length());
-  }
-
-
-	System.out.println("\n\n\n\n\n -------------------FINISHED UPDATE \n\n\n\n");
+			updateWord(currentWord);
+			//datastore.checkingMessage(currentWord);
+			output=output.substring(currentIndex+1);
+			System.out.println("Length now is:"+output.length());
+	  }
 
 
-	}
-	public void updateWord(String id){
+		System.out.println("\n\n\n\n\n -------------------FINISHED UPDATE \n\n\n\n");
 
-		//datastore.storeMessage(message);
-
-		Message wordMessage=datastore.readyToLike(id);
-		
-		if(wordMessage.getCategory().equals("test")){
 
 		}
-		else{
-			//Now I have access to it, I need to make it a copy, increment, then create a entitiy for it
-			Message copyMessage= new Message(wordMessage.getUser(),wordMessage.getText(),wordMessage.getScore(),wordMessage.getLongitude(),wordMessage.getLatitude(),wordMessage.getCategory(),wordMessage.getLike());
+		public void updateWord(String id){
 
-			copyMessage.setLike(copyMessage.getLike()+1);
-			copyMessage.setId(wordMessage.getId());
-			datastore.storeMessage(copyMessage);
-		}
+			//datastore.storeMessage(message);
+
+			Message wordMessage=datastore.readyToLike(id);
+			
+			if(wordMessage.getCategory().equals("test")){
+
+			}
+			else{
+				//Now I have access to it, I need to make it a copy, increment, then create a entitiy for it
+				Message copyMessage= new Message(wordMessage.getUser(),wordMessage.getText(),wordMessage.getScore(),wordMessage.getLongitude(),wordMessage.getLatitude(),wordMessage.getCategory(),wordMessage.getLike());
+
+				copyMessage.setLike(copyMessage.getLike()+1);
+				copyMessage.setId(wordMessage.getId());
+				datastore.storeMessage(copyMessage);
+			}
 
 
 
 
-		//f
+			//f
 
-		//f
+			//f
 	}
 	public double hashFunction(String x){
 		int hash = 7;
