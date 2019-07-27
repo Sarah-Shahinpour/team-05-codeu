@@ -213,6 +213,7 @@
       if(messageFound==true){
         initialScreen();
         swal.fire("Stories Were Found!", "Click left or right arrows to cycle through stories", "success");
+        document.getElementById("likeButton").innerHTML=like[likeCurrent];
 
       }   
       noMessageAlert();
