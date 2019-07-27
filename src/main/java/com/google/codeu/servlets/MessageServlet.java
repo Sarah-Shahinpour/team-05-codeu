@@ -111,8 +111,8 @@ public class MessageServlet extends HttpServlet {
 		
 		
 		
-
-		Message message = new Message(user, textWithImagesReplaced, score,longitude,latitude,category);
+		//We put 0 because we are getting a new message.
+		Message message = new Message(user, textWithImagesReplaced, score,longitude,latitude,category,0);
 		
 	
 		

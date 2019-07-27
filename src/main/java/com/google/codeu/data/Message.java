@@ -35,12 +35,12 @@ public class Message {
    * random ID and uses the current system time for the creation time.
    */
   
-  public Message(String user, String text, double score, double longitude, double latitude, String category ) {
-    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), score,longitude, latitude,category);
+  public Message(String user, String text, double score, double longitude, double latitude, String category, int like ) {
+    this(UUID.randomUUID(), user, text, System.currentTimeMillis(), score,longitude, latitude,category,like);
   }
   
 
-  public Message(UUID id, String user, String text, long timestamp, double score, double longitude, double latitude, String category) {
+  public Message(UUID id, String user, String text, long timestamp, double score, double longitude, double latitude, String category,int like) {
     this.id = id;
     this.user = user;
     this.text = text;
@@ -49,6 +49,7 @@ public class Message {
     this.longitude=longitude;
     this.latitude=latitude;
     this.category=category;
+    this.like=like;
     
   }
 
@@ -56,10 +57,17 @@ public class Message {
     return id;
   }
 
+
+
   public String getUser() {
     return user;
   }
-
+  public int getLike(){
+    return like;
+  }
+  public void setLike(int x){
+    this.like=x;
+  }
   public String getText() {
     return text;
   }
