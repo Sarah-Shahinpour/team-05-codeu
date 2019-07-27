@@ -29,18 +29,19 @@ public class Message {
   private long timestamp;
   private double score;
   private String category;
+  private double like;
 
   /**
    * Constructs a new {@link Message} posted by {@code user} with {@code text} content. Generates a
    * random ID and uses the current system time for the creation time.
    */
   
-  public Message(String user, String text, double score, double longitude, double latitude, String category, int like ) {
+  public Message(String user, String text, double score, double longitude, double latitude, String category, double like ) {
     this(UUID.randomUUID(), user, text, System.currentTimeMillis(), score,longitude, latitude,category,like);
   }
   
 
-  public Message(UUID id, String user, String text, long timestamp, double score, double longitude, double latitude, String category,int like) {
+  public Message(UUID id, String user, String text, long timestamp, double score, double longitude, double latitude, String category,double like) {
     this.id = id;
     this.user = user;
     this.text = text;
@@ -62,10 +63,10 @@ public class Message {
   public String getUser() {
     return user;
   }
-  public int getLike(){
+  public double getLike(){
     return like;
   }
-  public void setLike(int x){
+  public void setLike(double x){
     this.like=x;
   }
   public String getText() {

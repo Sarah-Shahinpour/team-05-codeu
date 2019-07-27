@@ -7,6 +7,10 @@
   }
   var imgs = [];
   var imgText = [];
+  var like= [];
+  var likeCurrent=0;
+  var hasLiked= [];
+  var messagID=[];
   var currentLong;
   var currentLat;
   var near=true;
@@ -14,6 +18,61 @@
   var type="Gossip";
   var distanceApart=2.0;
   var messageFound=false;
+
+
+
+  window.addEventListener('beforeunload',(event)=>{
+    update();
+  })
+  function update(){
+    console.log("UPDATING");
+    var returnText="";
+    for(var i=0;i<hasLiked.length;i++){
+      if(hasLiked[i]==true){
+        console.log("Found Something");
+        returnText=returnText+messagID[i]+"_";
+        //returnText=returnText+hashFunction(imgText[i])+"_";
+      }
+    }
+    const params = new URLSearchParams();
+  //params.append('lat', lat);
+  //params.append('lng', lng);
+  //params.append('content', content);
+
+    const one = new URLSearchParams();
+
+    one.append('sentText',returnText)
+    console.log("About to Fetch");
+    fetch('/update', {
+      method: 'POST',
+      body: one
+    });
+    console.log("Finished");
+
+  }
+
+
+
+
+
+
+
+
+
+  function likeButton(){
+    if(hasLiked[likeCurrent]==false){
+      document.getElementById("likeButton").style.color = "blue";
+      value=like[likeCurrent]+1;
+      document.getElementById("likeButton").innerHTML=value;
+      like[likeCurrent]=value;
+      hasLiked[likeCurrent]=true;
+    }
+  }
+
+  function unLikeButton(){
+    document.getElementById("likeButton").style.color = "black";
+  }
+
 
   function decode(){
     var words=parameterUsername.split("_");
@@ -67,6 +126,8 @@
       var patt2 = /\s/g;
       messages.forEach((message) => {
         console.log(message.category);
+        console.log("ID IS:"+message.id);
+        console.log("LIKE IS:"+message.like);
         //This stores all the messages in an array
         //Don't Take Account of Type!!!, only emotion and Distance
         if(message.text.replace(patt1,'').replace(patt2,'').length){
@@ -86,6 +147,9 @@
               if(message.category==type){
                 imgs[count]=messageToImage(type); 
                 imgText[count]=message.text;
+                like[count]=0;
+                hasLiked[count]=false;
+                messagID[count]=message.id;
                 count=count+1; 
                 messageFound=true;
               }
@@ -97,6 +161,9 @@
                 if(message.category==type){
                   imgs[count]=messageToImage(type); 
                   imgText[count]=message.text;
+                  like[count]=0;
+                  hasLiked[count]=false;
+                  messagID[count]=message.id;
                   count=count+1;
                   messageFound=true;
                 }
@@ -113,6 +180,9 @@
               if(message.category==type){
                 imgs[count]=messageToImage(type); 
                 imgText[count]=message.text;
+                like[count]=0;
+                hasLiked[count]=false;
+                messagID[count]=message.id;
                 count=count+1;
                 messageFound=true; 
               }
@@ -122,6 +192,9 @@
               if(message.category==type){
                 imgs[count]=messageToImage(type); 
                 imgText[count]=message.text;
+                like[count]=0;
+                hasLiked[count]=false;
+                messagID[count]=message.id;
                 count=count+1;
                 messageFound=true;
               }
@@ -194,9 +267,20 @@
   function imgCycle(event){
     if(messageFound==true){
       if(event.keyCode == '37'){
-        changeImage(-1);
+        likeCurrent=changeImage(-1);
       } else if(event.keyCode == '39'){
-        changeImage(1);
+        likeCurrent=changeImage(1);
+      }
+      document.getElementById("likeButton").innerHTML=like[likeCurrent];
+
+      if(hasLiked[likeCurrent]==false){
+        console.log("Turning Black");
+        unLikeButton();
+      }
+      else{
+        console.log("Turning Blue");
+        document.getElementById("likeButton").style.color = "blue";
+
       }
     }
   }
@@ -234,5 +318,6 @@
     } 
     img.src = imgs[current];
     messageText.innerHTML = imgText[current];
+    return current;
   }
 
