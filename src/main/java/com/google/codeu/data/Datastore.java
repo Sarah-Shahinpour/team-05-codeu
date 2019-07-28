@@ -49,6 +49,8 @@ public class Datastore {
 		messageEntity.setProperty("longitude", message.getLongitude());
 		messageEntity.setProperty("latitude", message.getLatitude());
 		messageEntity.setProperty("category", message.getCategory());
+		messageEntity.setProperty("like", message.getLike());
+		messageEntity.setProperty("id",message.getId().toString());
 
 		datastore.put(messageEntity);
 	}
@@ -70,8 +72,9 @@ public class Datastore {
 		double latitude=(double) entity.getProperty("latitude");
 
 		String category= (String) entity.getProperty("category");
+		double like=(double) entity.getProperty("like");
 		
-		Message message = new Message(id, user, text, timestamp, score,longitude,latitude,category);
+		Message message = new Message(id, user, text, timestamp, score,longitude,latitude,category,like);
 		return message;
 	}
 
@@ -145,7 +148,43 @@ public class Datastore {
 
 		return user;
 	}
+	public Message readyToLike(String idFound){
+		//f
+		List<Message> messages = new ArrayList<>();
 
+		Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
+		PreparedQuery results = datastore.prepare(query);
+
+		for (Entity entity : results.asIterable()) {
+			try {
+				String user = (String) entity.getProperty("user");
+
+				messages.add(foundMessage(entity, user));
+			} catch (Exception e) {
+				System.err.println("Error reading message.");
+				System.err.println(entity.toString());
+				e.printStackTrace();
+			}
+		}
+		//
+		for(Message x:messages){
+			if(x.getId().toString().equals(idFound)){
+				System.out.println("Found id"+idFound);
+				//Found it, now we can update it. 
+				return x;
+
+			}
+		}
+		Message temp= new Message("test","test",0,0,0,"test",0);
+
+		return temp;
+
+
+
+
+
+
+	}
 	public Set<String> getUsers() {
 		Set<String> users = new HashSet<>();
 		Query query = new Query("Message");
